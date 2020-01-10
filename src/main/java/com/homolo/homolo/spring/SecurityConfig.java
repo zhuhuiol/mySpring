@@ -48,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//控制访问权限
 		http.authorizeRequests()
 				.antMatchers("/hello").authenticated()
-				.antMatchers("/testI").permitAll()
-				.antMatchers("/testBatchInsertProcedure").permitAll()
+				.antMatchers("/testI").authenticated()
+				.antMatchers("/testBatchInsertProcedure").authenticated()
 //				.antMatchers("/logout").permitAll()
 		.anyRequest().authenticated()
 		.and()
