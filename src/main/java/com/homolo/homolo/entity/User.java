@@ -1,6 +1,8 @@
 package com.homolo.homolo.entity;
 
+import com.homolo.homolo.annotations.TestAutowired;
 import lombok.Data;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -9,11 +11,13 @@ import java.util.Date;
  * @DESC
  * @Create 2019-08-23  下午12:18
  */
+@Service
 @Data
 public class User {
 
 	private String userid;
 
+	@TestAutowired
 	private String username;
 
 	private String password;

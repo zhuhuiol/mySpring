@@ -17,6 +17,7 @@ https://www.cnblogs.com/goloving/p/7183803.html  JS/JQuery获取当前元素的�
 https://angular.cn/guide/quickstart  angular文档
 https://ng.ant.design/docs/introduce/zh   蚂蚁金服angular框架文档
 https://vuex.vuejs.org/zh/installation.html  vuex
+https://www.yuque.com  语雀
 
 -------------------------------------Linux---------------------------
 https://man.linuxde.net/    Linux命令大全
@@ -37,6 +38,19 @@ https://blog.csdn.net/u012578322/article/details/84558742   Java实现自定义�
 -------------------------------------其他---------------------------
 https://segmentfault.com/a/1190000011827338  将本地web服务映射到公网访问
 https://www.runoob.com/docker/docker-install-mysql.html　　 菜鸟教程　
+
+
+
+
+
+
+
+-- >>>>>>>>>>>>  1,自定义security校验,  2,webservice服务, 3,发布result 接口服务
+
+
+
+
+
 
 
 
