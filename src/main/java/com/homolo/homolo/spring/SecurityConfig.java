@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/hello").authenticated()
 				.antMatchers("/testI").authenticated()
 				.antMatchers("/testBatchInsertProcedure").authenticated()
-//				.antMatchers("/logout").permitAll()
+				.antMatchers("/ws/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
