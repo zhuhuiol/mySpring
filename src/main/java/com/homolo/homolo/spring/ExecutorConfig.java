@@ -22,7 +22,7 @@ public class ExecutorConfig {
 		executor.setCorePoolSize(300); //核心线程数
 		executor.setMaxPoolSize(500); //最大线程数
 		executor.setQueueCapacity(9999); //等待执行线程的队列大小
-		executor.setThreadNamePrefix("asyns-service-"); //设置线程前缀名称
+		executor.setThreadNamePrefix("asyns-service-zh-"); //设置线程前缀名称
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy()); //失败处理-重新执行此线程
 		executor.initialize();
 		return executor;

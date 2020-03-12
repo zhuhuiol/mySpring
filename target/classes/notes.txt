@@ -1,0 +1,17 @@
+------------------------------------  ZH -----------------------------------
+
+@MapperScan注解:
+在SpringBoot中集成MyBatis，可以在mapper接口上添加@Mapper注解，将mapper注入到Spring,但是如果每一给mapper都添加@mapper注解会很麻烦，这时可以使用@MapperScan注解来扫描包。
+
+经测试发现，@MapperScan注解只会扫描包中的接口，不会扫描类，所以可以在包中写Provider类。
+
+@MapperScan("com.demo.mapper")：扫描指定包中的接口
+
+@MapperScan("com.demo.*.mapper")：一个*代表任意字符串，但只代表一级包,比如可以扫到com.demo.aaa.mapper,不能扫到com.demo.aaa.bbb.mapper
+
+@MapperScan("com.demo.**.mapper")：两个*代表任意个包,比如可以扫到com.demo.aaa.mapper,也可以扫到com.demo.aaa.bbb.mapper
+
+----------------------------------------------------------------------------------
+@EnableAsync:
+启用异步操作
+@Async("")使用

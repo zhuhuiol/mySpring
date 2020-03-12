@@ -2,13 +2,18 @@ package com.homolo.homolo.controller;
 
 import com.homolo.homolo.entity.User;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
+import com.homolo.homolo.utils.AsyncUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: 19-9-9 下午12:40
  */
 @Controller
+@Service
 public class LoginController {
 
 	@Autowired
@@ -28,6 +34,10 @@ public class LoginController {
 
 	@Autowired
 	private User user;
+
+	@Autowired
+	private AsyncUtil asyncUtil;
+
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = {"/", "/hello"}, method = RequestMethod.GET)
@@ -80,4 +90,18 @@ public class LoginController {
 		logger.info("执行插入操作完毕，共" + num + "条");
 		return "执行完成,共" + num + "条";
 	}
+
+	@GetMapping(value = "/testAsync")
+	@ResponseBody
+	public Object testAsync() {
+		StopWatch stopWatch = StopWatch.createStarted();
+		for (int i= 0; i < 50; i++) {
+			this.asyncUtil.testAsyncMethod(i);
+		}
+		stopWatch.stop();
+		logger.info("testAsync cost {} ms", stopWatch.getTime());
+		return "测试";
+	}
+
+
 }

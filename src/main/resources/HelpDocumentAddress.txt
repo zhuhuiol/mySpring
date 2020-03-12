@@ -1,0 +1,57 @@
+------------------  之前的网上的一些文档地址 --------------------------
+-------------------------------------spring---------------------------
+https://github.com/xkcoding/spring-boot-demo   demo 集合
+https://www.springcloud.cc/  Spring Cloud中文网
+http://blog.didispace.com/spring-cloud-learning/  Spring Cloud教程
+http://www.spring4all.com/article/428　　Spring Security
+https://blog.csdn.net/qq_33556185/article/details/51852537   spring定时任务详解（@Scheduled注解）
+https://www.cnblogs.com/ll409546297/p/7815409.html / https://www.sojson.com/shiro   springboot整合shiro应用
+
+-------------------------------------git---------------------------
+https://blog.csdn.net/gaoweijiegwj/article/details/52925189  git切换分支导致代码丢失的问题
+https://blog.csdn.net/asoar/article/details/84111841   Git撤销&回滚操作(git reset 和 get revert)
+
+-------------------------------------前端---------------------------
+https://cn.vuejs.org/v2/guide/   Vue.js
+https://www.cnblogs.com/goloving/p/7183803.html  JS/JQuery获取当前元素的上一个/下一个兄弟级元素等元素的方法
+https://angular.cn/guide/quickstart  angular文档
+https://ng.ant.design/docs/introduce/zh   蚂蚁金服angular框架文档
+https://vuex.vuejs.org/zh/installation.html  vuex
+https://www.yuque.com  语雀
+
+-------------------------------------Linux---------------------------
+https://man.linuxde.net/    Linux命令大全
+https://www.jianshu.com/p/88674fed223a   Linux系统提供了wc命令来统计文件的行数
+https://blog.csdn.net/qq6759/article/details/81153426　解决Linux下unzip解压缩中文乱码的问题
+https://www.cnblogs.com/lonelyxmas/p/10510108.html　　使用 docker 安装多版本的 MySQL
+
+
+-------------------------------------java---------------------------
+https://www.cnblogs.com/dolphin0520/p/3932921.html  Java并发编程：线程池的使用
+https://www.cnblogs.com/upcwanghaibo/p/6535505.html  多线程之线程同步的方法（7种）
+https://blog.csdn.net/zp357252539/article/details/51587902  java 利用webservice传输文件
+https://www.cnblogs.com/wkcn/p/7803147.html　　java中表示二进制、八进制、十进制、十六进制
+https://blog.csdn.net/qq_31204765/article/details/51870238　　docx4j操作word常用方法
+https://blog.csdn.net/zt15732625878/article/details/100061528  Java实现自定义注解
+https://blog.csdn.net/u012578322/article/details/84558742   Java实现自定义注解
+
+-------------------------------------其他---------------------------
+https://segmentfault.com/a/1190000011827338  将本地web服务映射到公网访问
+https://www.runoob.com/docker/docker-install-mysql.html　　 菜鸟教程　
+
+
+
+
+
+
+
+-- >>>>>>>>>>>>  1,自定义security校验,  2,webservice服务, 3,发布result 接口服务
+
+
+
+
+
+
+
+
+

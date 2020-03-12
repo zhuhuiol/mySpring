@@ -28,16 +28,12 @@ public class WebserviceCxfConfig {
 	public SpringBus springBus() {
 		return new SpringBus();
 	}
-//	@Bean
-//	public ServletRegistrationBean dispatcherServlet() {
-//		return new ServletRegistrationBean(new CXFServlet(), "/soap/*");
-//	}
 
 	@Bean
 	public Endpoint endpoint() {
 		EndpointImpl endpoint = new EndpointImpl(springBus(), new TestWebserviceImpl());
 		endpoint.publish("/TestWebservice");
-		this.logger.info("发布WebService服务......");
+		this.logger.info("发布WexbService服务......");
 		return endpoint;
 	}
 	@Bean
