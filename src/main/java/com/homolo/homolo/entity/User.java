@@ -4,6 +4,7 @@ import com.homolo.homolo.annotations.TestAutowired;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 @Service
 @Data
-public class User {
+public class User implements Serializable {
 
 	private String userid;
 
