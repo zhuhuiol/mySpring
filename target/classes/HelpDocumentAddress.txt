@@ -45,6 +45,8 @@ https://www.runoob.com/docker/docker-install-mysql.html　　 菜鸟教程　
 https://blog.csdn.net/qq_35387940/article/details/100514134  --springboot整合
 https://www.cnblogs.com/Alva-mu/p/9535396.html　－－介绍几种模式
 https://segmentfault.com/a/1190000021164481 --spring 整合
+https://blog.csdn.net/fly_leopard/article/details/102821776  rabbitmq basicReject / basicNack / basicRecover区别
+
 
 
 

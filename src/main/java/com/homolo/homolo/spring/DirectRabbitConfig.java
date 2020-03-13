@@ -3,6 +3,8 @@ package com.homolo.homolo.spring;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class DirectRabbitConfig {
 
 	/**
-	 * 队列－　　起名:testDirectQueue.
+	 * 队列　　起名:testDirectQueue.
 	 * @return queue
 	 */
 	@Bean
@@ -30,8 +32,9 @@ public class DirectRabbitConfig {
 	 */
 	@Bean
 	DirectExchange directExchange() {
-		return new DirectExchange("DirectExchange");
+		return new DirectExchange("DirectExchange"); //默认持久化，不自动删除
 	}
+
 
 	/**
 	 * 为队列绑定交换机,设置匹配键:DirectRouting.

@@ -24,6 +24,8 @@ public class RabbitMQConfig {
 		logger.info("create RabbitTemplate......");
 		RabbitTemplate rabbitTemplate = new RabbitTemplate();
 		rabbitTemplate.setConnectionFactory(connectionFactory);
+		//使用单独的发送连接，避免生产者由于各种原因阻塞而导致消费者同样阻塞/或者设置两个CachingConnectionFactory,生产者与消费者各一个
+		rabbitTemplate.setUsePublisherConnection(true);
 		//设置开启Mandatory,才能触发回调函数，无论消息推送结果怎么样都强制调用回调函数
 		rabbitTemplate.setMandatory(true);
 		rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
