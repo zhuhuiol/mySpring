@@ -6,7 +6,6 @@ import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,7 @@ public class DirectRabbitConsumerService implements ChannelAwareMessageListener 
 		long deliveryTag = message.getMessageProperties().getDeliveryTag();
 		try {
 			User user = SerializableUtil.Deserialize(message.getBody(), User.class);
-			logger.info("DirectRabbitMQ接收消息,address:" + user.getAddress());
+			logger.info("DirectRabbitMQ接收消息-address:" + user.getAddress());
 			channel.basicAck(deliveryTag, true);
 		} catch (IOException e) {
 			//重新放回队列

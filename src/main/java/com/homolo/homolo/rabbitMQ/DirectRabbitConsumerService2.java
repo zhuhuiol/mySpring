@@ -6,38 +6,34 @@ import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @Author: ZH
- * @Description: 默认.
- * @Date: 20-3-12 下午5:20
+ * @Description: direct模式，　同一个队列，　竞争消费.
+ * @Date: 20-3-12 下午3:46
  */
 @Component
-@RabbitListener(queues = "fanout.A")
-public class FanoutRabbitConsumerAService implements ChannelAwareMessageListener {
-
+@RabbitListener(queues = "DirectQueue")
+public class DirectRabbitConsumerService2 implements ChannelAwareMessageListener {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 //	@RabbitHandler
-//	public void getMessage(List message) {
-//		logger.info("opicRabbitMQ-A接收消息:" + message.size());
+//	public void process(User user) {
+//		logger.info("DirectRabbitMQ接收消息：" + user.getAddress());
 //	}
 
 	@Override
 	public void onMessage(Message message, Channel channel) throws Exception {
-		//手动确认
-		logger.info("opicRabbitMQ-A接收消息:" + message.toString());
+		logger.info("DirectRabbitMQ2接收消息：" + message.toString());
 		long deliveryTag = message.getMessageProperties().getDeliveryTag();
 		try {
-			List list = SerializableUtil.Deserialize(message.getBody(), List.class);
-			logger.info("opicRabbitMQ-A接收消息-size:" + list.size());
+			User user = SerializableUtil.Deserialize(message.getBody(), User.class);
+			logger.info("DirectRabbitMQ2接收消息-address:" + user.getAddress());
 			channel.basicAck(deliveryTag, false);
 		} catch (IOException e) {
 			//重新放回队列

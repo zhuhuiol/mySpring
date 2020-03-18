@@ -1,5 +1,6 @@
 package com.homolo.homolo.test;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.junit.Test;
 
@@ -23,19 +24,28 @@ public class IOTest {
 	 */
 	@Test
 	public void test1() {
-//		try {
-//			InputStream inputStream = new FileInputStream("/home/homolo/桌面/工单测试报文xml");
-//			File file = File.createTempFile("test", ".txt", new File("/home/homolo/桌面/"));
-//			OutputStream outputStream = new FileOutputStream(file);
-//			IOUtils.copy(inputStream, outputStream);
-//			inputStream.close();
-//			outputStream.flush();
-//			outputStream.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			InputStream inputStream = new FileInputStream("/home/homolo/桌面/工单测试报文xml");
+			File file = File.createTempFile("test", ".txt", new File("/home/homolo/桌面/"));
+			OutputStream outputStream = new FileOutputStream(file);
+			IOUtils.copy(inputStream, outputStream);
+			inputStream.close();
+			outputStream.flush();
+			outputStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * file 转　out
+	 */
+	@Test
+	public void ioToFile() throws FileNotFoundException {
+//		InputStream转File
+//		InputStream fin = new FileInputStream(new File("/home/homolo/桌面/test.docx"));
 	}
 
 	/**

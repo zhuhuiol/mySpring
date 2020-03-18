@@ -1,6 +1,8 @@
 package com.homolo.homolo.spring;
 
 import com.homolo.homolo.rabbitMQ.DirectRabbitConsumerService;
+import com.homolo.homolo.rabbitMQ.DirectRabbitConsumerService2;
+import com.homolo.homolo.rabbitMQ.FanoutRabbitConsumerAService;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -26,14 +28,28 @@ public class RabbitMQMessageListenerConfig {
 	@Autowired
 	private DirectRabbitConsumerService directRabbitConsumerService;
 
+	@Autowired
+	private DirectRabbitConsumerService2 directRabbitConsumerService2;
+
+	@Autowired
+	private FanoutRabbitConfig fanoutRabbitConfig;
+
+	@Autowired
+	private FanoutRabbitConsumerAService fanoutRabbitConsumerAService;
+
 	@Bean
 	public SimpleMessageListenerContainer simpleMessageListenerContainer() {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(cachingConnectionFactory);
 		container.setConcurrentConsumers(1); //设置并发消费者
 		container.setMaxConcurrentConsumers(2); //设置最大并发消费者
 		container.setAcknowledgeMode(AcknowledgeMode.MANUAL); //消息改为手动确认，默认为自动确认
+		//配置队列以及监听器，　否则收不到消息
 		container.setQueues(this.directRabbitConfig.directQueue());
 		container.setMessageListener(this.directRabbitConsumerService);
+		container.setMessageListener(this.directRabbitConsumerService2);
+
+		container.setQueues(this.fanoutRabbitConfig.queueA());
+		container.setMessageListener(this.fanoutRabbitConsumerAService);
 
 		return container;
 	}

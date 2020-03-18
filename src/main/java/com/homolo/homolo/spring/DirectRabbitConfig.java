@@ -3,8 +3,6 @@ package com.homolo.homolo.spring;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +21,11 @@ public class DirectRabbitConfig {
 	 */
 	@Bean
 	public Queue directQueue() {
-		return new Queue("DirectQueue", true); //true 是否持久
+		return new Queue("DirectQueue"); //true 是否持久
+	}
+	@Bean
+	public Queue directQueue2() {
+		return new Queue("DirectQueue2"); //true 是否持久
 	}
 
 	/**
@@ -43,6 +45,10 @@ public class DirectRabbitConfig {
 	@Bean
 	Binding directBinding() {
 		return BindingBuilder.bind(directQueue()).to(directExchange()).with("DirectRouting");
+	}
+	@Bean
+	Binding directBinding2() {
+		return BindingBuilder.bind(directQueue2()).to(directExchange()).with("DirectRouting2");
 	}
 
 
