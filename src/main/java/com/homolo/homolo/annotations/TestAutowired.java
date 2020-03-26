@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TestAutowired {
-	String name() default "测试人员9527";
+	String name() default "注解测试人员9527";
 }

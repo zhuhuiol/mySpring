@@ -1,6 +1,5 @@
 package com.homolo.homolo.controller;
 
-import com.homolo.homolo.entity.User;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,18 +27,13 @@ public class LoginController {
 	@Autowired
 	private UserDateilServiceImpl userDetailService;
 
-	@Autowired
-	private User user;
-
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = {"/", "/hello"}, method = RequestMethod.GET)
 	public String welcome() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		this.logger.info("用户信息:" + authentication.getName());
-		this.logger.info("测试user信息:" + user.getUsername());
+		this.logger.info("用户:[{}]登录成功", authentication.getName());
 		return "hello";
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

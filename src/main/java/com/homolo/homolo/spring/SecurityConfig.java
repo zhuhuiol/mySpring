@@ -1,11 +1,16 @@
 package com.homolo.homolo.spring;
 
+import com.homolo.homolo.filters.CustomLoginFilter;
+import com.homolo.homolo.provider.CustomProvider;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -22,6 +26,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: ZH
@@ -34,8 +40,10 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+
 	@Autowired
 	UserDateilServiceImpl userDateilService;
+
 	//security配置,EnableGlobalMethodSecurity 允许配置注解
 	// 教程：http://www.spring4all.com/article/428
 	@Override
@@ -76,6 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					}
 				})
 				.deleteCookies("JSESSIONID").permitAll();
+		//配置自定义过滤器
+		http.addFilterAt(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	/**
@@ -96,6 +106,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		StrictHttpFirewall firewall = new StrictHttpFirewall();
 		firewall.setAllowUrlEncodedSlash(true);
 		return firewall;
+	}
+
+	/**
+	 * 自定义认证登录.
+	 * @return
+	 */
+	@Bean
+	public CustomLoginFilter customLoginFilter() {
+		return new CustomLoginFilter("/login", this.authenticationManager());
+	}
+
+	/**
+	 * 初始化自定义provider.
+	 * @return dao
+	 */
+//	@Bean
+//	public DaoAuthenticationProvider authenticationProvider(){
+//		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//		daoAuthenticationProvider.setUserDetailsService(this.userDateilService);
+//		return daoAuthenticationProvider;
+//	}
+	@Bean
+	public CustomProvider authenticationProvider(){
+		CustomProvider provider = new CustomProvider();
+		return provider;
+	}
+
+	/**
+	 * 设置自定义验证provider.
+	 * @return au
+	 */
+	@Bean
+	public AuthenticationManager authenticationManager(){
+		List<AuthenticationProvider> list = new ArrayList<>();
+		list.add(this.authenticationProvider());
+		return new ProviderManager(list);
 	}
 
 }

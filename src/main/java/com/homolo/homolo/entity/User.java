@@ -2,9 +2,12 @@ package com.homolo.homolo.entity;
 
 import com.homolo.homolo.annotations.TestAutowired;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -14,7 +17,7 @@ import java.util.Date;
  */
 @Service
 @Data
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
 	private String userid;
 
@@ -49,4 +52,30 @@ public class User implements Serializable {
 
 	private Date update_time;
 
+	private org.springframework.security.core.userdetails.User user;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 }

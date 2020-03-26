@@ -35,6 +35,12 @@ https://blog.csdn.net/qq_31204765/article/details/51870238　　docx4j操作word
 https://blog.csdn.net/zt15732625878/article/details/100061528  Java实现自定义注解
 https://blog.csdn.net/u012578322/article/details/84558742   Java实现自定义注解
 
+
+-------------------------------------sql---------------------------
+https://www.cnblogs.com/bchjazh/p/5997728.html  sql语句
+
+
+
 -------------------------------------其他---------------------------
 https://segmentfault.com/a/1190000011827338  将本地web服务映射到公网访问
 https://www.runoob.com/docker/docker-install-mysql.html　　 菜鸟教程　
@@ -52,7 +58,9 @@ https://www.jianshu.com/p/cc3d2017e7b3
 
 
 
--- >>>>>>>>>>>>  rabbitmq, springcluod ,自定义security校验,
+-- >>>>>>>>>>>>  rabbitmq
+-- >>>>>>>>>>>>  自定义security校验,自定义密码验证登录，qq登录，短信登录
+-- >>>>>>>>>>>>  springcluod ,
 
 
 

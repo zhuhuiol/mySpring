@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  * @Author: ZH
- * @Description: direct模式，　同一个队列，　竞争消费.
+ * @Description: direct模式.
  * @Date: 20-3-12 下午3:46
  */
 @Component

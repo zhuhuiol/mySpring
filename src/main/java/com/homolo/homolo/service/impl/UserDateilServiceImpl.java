@@ -1,7 +1,6 @@
 package com.homolo.homolo.service.impl;
 
 import com.homolo.homolo.dao.UserServiceDao;
-import com.homolo.homolo.security.UserDetailInfo;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class UserDateilServiceImpl implements UserDetailsService {
 
 	Logger logger = LoggerFactory.getLogger(UserDateilServiceImpl.class);
+
 	@Autowired
 	private UserServiceDao userServiceDao;
 
@@ -31,9 +31,10 @@ public class UserDateilServiceImpl implements UserDetailsService {
 		if (userInfo == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
+		//在此构造方法处设置用户的锁定，禁用等
 		User user  = new User(userInfo.getUsername(), userInfo.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
-//		return new UserDetailInfo(userInfo);
-		return user;
+		userInfo.setUser(user);
+		return userInfo;
 	}
 
 
