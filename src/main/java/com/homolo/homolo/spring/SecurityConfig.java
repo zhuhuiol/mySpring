@@ -61,13 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/testI").authenticated()
 				.antMatchers("/testBatchInsertProcedure").authenticated()
 				.antMatchers("/ws/**").permitAll()
+				.antMatchers("/api/**").permitAll()
 				.antMatchers("/test/**").permitAll()
 		.anyRequest().authenticated()
 
 
 		.and()
 		.formLogin()
-				.loginPage("/login")
+				.loginPage("/login").permitAll()
 				.defaultSuccessUrl("/hello");
 
 		http.logout()

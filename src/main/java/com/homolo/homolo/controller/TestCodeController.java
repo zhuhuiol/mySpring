@@ -97,4 +97,17 @@ public class TestCodeController {
 	}
 
 
+
+
+
+
+	@RequestMapping(value = "/chanel")
+	public Object chanel(HttpServletRequest request) {
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("qqq", "q");
+		map.put("www", "w");
+		map.put("eee", "e");
+		return map;
+	}
+
 }

@@ -36,8 +36,8 @@ public class LoginController {
 		this.logger.info("用户:[{}]登录成功", authentication.getName());
 		return "hello";
 	}
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
+	@RequestMapping(value = "/login")
+	public String login(HttpServletRequest request) {
 		return "loginTest";
 	}
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
