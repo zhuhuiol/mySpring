@@ -1,4 +1,9 @@
 package com.homolo.homolo.utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -17,6 +22,8 @@ public class DateUtil {
 	public static boolean beforeNow(Date date) {
 		return date.getTime() < System.currentTimeMillis();
 	}
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);
 
 	private static void cutTime(Calendar cal) {
 		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
@@ -175,8 +182,20 @@ public class DateUtil {
 		return cal.getTime();
 	}
 
-	public static Date parseDate(String s) {
+	public static Date parseDateByLong(String s) {
 		return new Date(Long.parseLong(s));
+	}
+	public static Date parseDate(String s, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Date date = null;
+		try {
+			date = sdf.parse(s);
+		} catch (ParseException e) {
+			LOGGER.error("时间转换出错：{}", e.getMessage(), e);
+		} catch (Exception e) {
+			LOGGER.error("时间转换出错：{}", e.getMessage(), e);
+		}
+		return date;
 	}
 
 	public static int getBetweenDays(Date d1, Date d2) {

@@ -57,4 +57,15 @@ public class UserDateilServiceImpl implements UserDetailsService {
 		logger.info("this testBatchInsertProcedure is cost: " + stopWatch.getTime() + "ms");
 	}
 
+	//创建测试用户
+	public String createTestUser(com.homolo.homolo.entity.User user) {
+		com.homolo.homolo.entity.User userInfo = this.userServiceDao.loadUserByUsername(user.getUsername());
+		if (userInfo == null) {
+			this.userServiceDao.createTestUser(user);
+			return "用户创建成功";
+		} else {
+			return "用户已存在";
+		}
+	}
+
 }

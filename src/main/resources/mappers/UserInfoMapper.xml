@@ -39,5 +39,9 @@
         call procedure_testBatch_insert(${num});
     </select>
 
+<!--    插入测试数据-->
+    <insert id="createTestUser">
+        INSERT INTO myuser values(#{userid}, #{username}, #{usernick}, #{password}, #{birthday}, ${age}, ${sex}, #{email}, 0, #{mobile}, #{description}, #{idnunber}, #{address}, NOW(), NOW());
+    </insert>
 
 </mapper>

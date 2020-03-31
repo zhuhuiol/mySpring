@@ -1,22 +1,23 @@
 package com.homolo.homolo.controller;
 
 import com.homolo.homolo.entity.User;
+import com.homolo.homolo.service.impl.UserDateilServiceImpl;
 import com.homolo.homolo.utils.AsyncUtil;
+import com.homolo.homolo.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: ZH
@@ -34,6 +35,12 @@ public class TestCodeController {
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
+
+	@Autowired
+	private UserDateilServiceImpl userDetailService;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	/**
 	 * 测试异步方法.
@@ -100,6 +107,25 @@ public class TestCodeController {
 
 
 
+	@RequestMapping(value = "/createTestUser")
+	public Object createTestUser(HttpServletRequest request) {
+		User user = new User();
+		user.setUserid(UUID.randomUUID().toString().replaceAll("-", ""));
+		user.setUsername("zhuhui");
+		user.setUsernick("江湖小虾");
+		user.setPassword(this.passwordEncoder.encode("123456"));
+		user.setBirthday(DateUtil.parseDate("1996-04-18 00:00:00", "yyyy-MM-dd hh:mm:ss"));
+		user.setAge(24);
+		user.setSex(1);
+		user.setEmail("1464781598@qq.com");
+		user.setDisabled(0);
+		user.setMobile("13267658876");
+		user.setDescription("简介");
+		user.setIdnunber("420422199604189834");
+		user.setAddress("上海市松江区万达广场");
+		String result = this.userDetailService.createTestUser(user);
+		return result;
+	}
 
 	@RequestMapping(value = "/chanel")
 	public Object chanel(HttpServletRequest request) {

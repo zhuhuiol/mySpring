@@ -13,4 +13,6 @@ public interface UserServiceDao {
 	int testI();
 	//测试用存储过程批量插入数据
 	void testBatchInsertProcedure(Integer num);
+	//创建测试用户
+	void createTestUser(User user);
 }
