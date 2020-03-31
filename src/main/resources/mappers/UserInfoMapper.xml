@@ -32,7 +32,7 @@
     </select>
 
     <insert id="testI">
-        INSERT INTO testNum VALUES (default, 'qqq','www','eee','rrr','ttt',now());
+        INSERT INTO testNum VALUES (default, 'qqq','wwww','eee','rrr','ttt',now());
     </insert>
 
     <select id="testBatchInsertProcedure">
