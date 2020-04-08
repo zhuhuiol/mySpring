@@ -1,8 +1,11 @@
 package com.homolo.homolo.spring;
 
+import com.homolo.homolo.constants.ReturnCode;
 import com.homolo.homolo.filters.CustomLoginFilter;
 import com.homolo.homolo.provider.CustomProvider;
+import com.homolo.homolo.result.ServiceResult;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.firewall.HttpFirewall;
@@ -26,6 +31,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		//配置自定义过滤器
+		http.addFilterAt(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 		//控制访问权限
 		http.authorizeRequests()
 				.antMatchers("/hello").authenticated()
@@ -63,19 +71,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/ws/**").permitAll()
 				.antMatchers("/api/**").permitAll()
 				.antMatchers("/test/**").permitAll()
+				.antMatchers("/login").permitAll()
 		.anyRequest().authenticated()
 
 
 		.and()
+		.cors()
+		.and()
+		.csrf().disable()
 		.formLogin()
 				.loginPage("/login").permitAll()
+				.loginProcessingUrl("/login")
 				.defaultSuccessUrl("/hello");
 
 		http.logout()
 				//请求方式指定为get
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-//				.logoutUrl("/logout")
-				.logoutSuccessUrl("/login")
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/hello")
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.addLogoutHandler(new LogoutHandler() {
@@ -85,8 +98,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					}
 				})
 				.deleteCookies("JSESSIONID").permitAll();
-		//配置自定义过滤器
-		http.addFilterAt(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
 	}
 
 	/**
@@ -115,7 +128,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public CustomLoginFilter customLoginFilter() {
-		return new CustomLoginFilter("/login", this.authenticationManager());
+		CustomLoginFilter customLoginFilter = new CustomLoginFilter("/login", this.authenticationManager());
+		customLoginFilter.setAllowSessionCreation(true);
+//		customLoginFilter.setAuthenticationManager(this.authenticationManager());
+		customLoginFilter.setAuthenticationFailureHandler(this.failureHandler());
+		customLoginFilter.setAuthenticationSuccessHandler(this.successHandler());
+		return customLoginFilter;
 	}
 
 	/**
@@ -143,6 +161,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		List<AuthenticationProvider> list = new ArrayList<>();
 		list.add(this.authenticationProvider());
 		return new ProviderManager(list);
+	}
+
+	/**
+	 *自定义登录成功处理器，成功返回一个带有成功信息的Json数据包装类
+	 */
+	private AuthenticationSuccessHandler successHandler() {
+		return (request, response, authentication) -> {
+			response.setContentType("application/json;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			JSONObject object = new JSONObject();
+			object.put("code", ReturnCode.SUCCESS);
+			out.write(object.toString());
+			out.flush();
+			out.close();
+		};
+	}
+	/**
+	 *自定义登录失败处理器，成功返回一个带有失败信息的Json数据包装类
+	 */
+	private AuthenticationFailureHandler failureHandler() {
+		return (request, response, authentication) -> {
+			response.setContentType("application/json;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			JSONObject object = new JSONObject();
+			object.put("code", ReturnCode.FAILURE);
+			object.put("message", authentication.getMessage());
+			out.write(object.toString());
+			out.flush();
+			out.close();
+		};
 	}
 
 }

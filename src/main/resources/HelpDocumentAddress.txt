@@ -57,6 +57,10 @@ https://blog.csdn.net/u011709128/article/details/81294193  竞争消费模式
 https://www.jianshu.com/p/cc3d2017e7b3
 
 
+-----------------------------------UML建模-----------------------------------
+https://www.processon.com/diagrams  在线建模
+
+
 
 -- >>>>>>>>>>>>  rabbitmq
 -- >>>>>>>>>>>>  自定义security校验,自定义密码验证登录，qq登录，短信登录

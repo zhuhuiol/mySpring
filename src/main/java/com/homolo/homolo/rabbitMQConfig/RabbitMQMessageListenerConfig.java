@@ -1,4 +1,4 @@
-package com.homolo.homolo.spring;
+package com.homolo.homolo.rabbitMQConfig;
 
 import com.homolo.homolo.rabbitMQ.DirectRabbitConsumerService;
 import com.homolo.homolo.rabbitMQ.DirectRabbitConsumerService2;

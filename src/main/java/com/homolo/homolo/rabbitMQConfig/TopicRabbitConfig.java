@@ -1,4 +1,4 @@
-package com.homolo.homolo.spring;
+package com.homolo.homolo.rabbitMQConfig;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

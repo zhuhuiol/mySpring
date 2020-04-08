@@ -29,12 +29,10 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-//		checkUser(username, password);
-//		List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-//		simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+		String username = request.getParameter("zhun");
+		String password = request.getParameter("zhpw");
 		UsernamePasswordAuthenticationToken token =  new UsernamePasswordAuthenticationToken(username, password);
+		token.setDetails(authenticationDetailsSource.buildDetails(request));
 		return getAuthenticationManager().authenticate(token);
 	}
 
