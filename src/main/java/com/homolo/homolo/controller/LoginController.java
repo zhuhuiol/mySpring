@@ -1,5 +1,7 @@
 package com.homolo.homolo.controller;
 
+import com.homolo.homolo.constants.ReturnCode;
+import com.homolo.homolo.result.ServiceResult;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
 import com.homolo.homolo.utils.Rc4Util;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,22 +43,33 @@ public class LoginController {
 		this.logger.info("用户:[{}]登录成功", authentication.getName());
 		return "hello";
 	}
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login() {
 
+		return "loginTest";
+	}
 	@RequestMapping(value = "/api/pwdEncrypt")
 	@ResponseBody
-	public String pwdEncrypt(HttpServletRequest request, @RequestBody Map<Object, Object> params)  {
+	public Object pwdEncrypt(HttpServletRequest request, @RequestBody Map<Object, Object> params)  {
 		String zhpw = (String) params.get("password");
+		Map<String, Object> map = new HashMap<>();
+		map.put("code", ReturnCode.FAILURE);
 		if (zhpw == null) {
-			return zhpw;
+			map.put("msg", "参数为空");
+			return map;
 		}
 		String password = null;
 		try {
 			password = Rc4Util.getEnData(zhpw, Rc4Util.key);
+			map.put("password", password);
+			logger.info("password:" + password);
+			map.put("code", ReturnCode.SUCCESS);
+			return map;
 		} catch (UnsupportedEncodingException e) {
 			this.logger.error("获取加密密码失败：{}", e.getMessage(), e);
+			map.put("msg", "加密密码失败");
+			return map;
 		}
-		logger.info("password:" + password);
-		return password;
 	}
 
 

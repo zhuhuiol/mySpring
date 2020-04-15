@@ -58,7 +58,7 @@ public class CustomProvider implements AuthenticationProvider {
 		} catch (InternalAuthenticationServiceException var5) {
 			throw var5;
 		} catch (Exception var6) {
-			var6.printStackTrace();
+			LOGGER.info("验证失败：{}.", var6.getMessage());
 			throw new InternalAuthenticationServiceException(var6.getMessage(), var6);
 		}
 	}

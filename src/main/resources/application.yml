@@ -21,7 +21,8 @@ spring:
     password: root
     publisher-confirms: true
     publisher-returns: true
-
+  resources:
+    static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources/
 
 #    pagehelper.helper-dialect=mysql
 #    pagehelper.params=count=countSql
