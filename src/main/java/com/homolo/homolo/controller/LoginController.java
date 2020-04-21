@@ -1,7 +1,6 @@
 package com.homolo.homolo.controller;
 
 import com.homolo.homolo.constants.ReturnCode;
-import com.homolo.homolo.result.ServiceResult;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
 import com.homolo.homolo.utils.Rc4Util;
 import org.apache.commons.lang3.StringUtils;
@@ -79,11 +78,7 @@ public class LoginController {
 		String numStr = request.getParameter("num");
 		int num = 1;
 		if (StringUtils.isNotBlank(numStr)) {
-			try {
-				num = Integer.parseInt(numStr);
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			}
+			num = Integer.parseInt(numStr);
 		}
 		this.userDetailService.testI(num);
 		logger.info("执行插入操作完毕，共" + num + "条");

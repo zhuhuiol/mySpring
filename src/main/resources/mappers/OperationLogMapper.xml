@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.homolo.homolo.dao.OperationLogDao">
+
+    <resultMap id="BaseResultMap" type="com.homolo.homolo.entity.logs.OperationLog" >
+
+        <id column="id" property="id"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="method" property="method" jdbcType="VARCHAR"/>
+        <result column="requestIp" property="requestIp"/>
+        <result column="createDate" property="createDate"/>
+        <result column="userName" property="userName"/>
+        <result column="operationType" property="operationType"/>
+    </resultMap>
+
+
+    <insert id="generateLog">
+        INSERT INTO operationLog VALUES (#{id}, #{description},#{method},#{requestIp},#{createDate},#{userName},#{operationType});
+    </insert>
+
+
+</mapper>

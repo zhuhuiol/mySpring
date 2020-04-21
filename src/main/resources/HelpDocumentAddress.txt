@@ -64,7 +64,9 @@ https://www.processon.com/diagrams  在线建模
 
 -- >>>>>>>>>>>>  rabbitmq
 -- >>>>>>>>>>>>  自定义security校验,自定义密码验证登录，qq登录，短信登录
--- >>>>>>>>>>>>  springcluod ,
+-- >>>>>>>>>>>>  activity工作流
+-- >>>>>>>>>>>>  ioc aop原理以及实现
+-- >>>>>>>>>>>>  springcluod
 
 
 

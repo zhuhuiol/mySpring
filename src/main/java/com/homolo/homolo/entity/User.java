@@ -52,6 +52,8 @@ public class User implements Serializable, UserDetails {
 
 	private Date update_time;
 
+	private Object details;
+
 	private org.springframework.security.core.userdetails.User user;
 
 	@Override

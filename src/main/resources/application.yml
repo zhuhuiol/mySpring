@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/sys?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=CTT
+    url: jdbc:mysql://127.0.0.1:3306/mydata?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=CTT
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
-#    password: root
+#    password: 123456
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource
   thymeleaf:
     suffix: .html

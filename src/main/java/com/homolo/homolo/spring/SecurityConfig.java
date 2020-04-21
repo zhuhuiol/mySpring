@@ -1,10 +1,15 @@
 package com.homolo.homolo.spring;
 
 import com.homolo.homolo.constants.ReturnCode;
+import com.homolo.homolo.entity.User;
+import com.homolo.homolo.entity.logs.LoginLog;
+import com.homolo.homolo.enums.LoginLogType;
 import com.homolo.homolo.filters.CustomLoginFilter;
 import com.homolo.homolo.provider.CustomProvider;
 import com.homolo.homolo.result.ServiceResult;
+import com.homolo.homolo.service.LoginLogService;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
+import com.homolo.homolo.utils.UUIDUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +29,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -31,8 +37,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,7 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
 	@Autowired
-	UserDateilServiceImpl userDateilService;
+	private UserDateilServiceImpl userDateilService;
+	@Autowired
+	private LoginLogService loginLogService;
 
 	//security配置,EnableGlobalMethodSecurity 允许配置注解
 	// 教程：http://www.spring4all.com/article/428
@@ -88,15 +98,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//请求方式指定为get
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/hello")
+				.logoutSuccessUrl("/login")
+				.addLogoutHandler(this.logoutHandler())
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
-				.addLogoutHandler(new LogoutHandler() {
-					@Override
-					public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) {
-						LOGGER.info("后置处理事件");
-					}
-				})
 				.deleteCookies("JSESSIONID").permitAll();
 
 
@@ -168,6 +173,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private AuthenticationSuccessHandler successHandler() {
 		return (request, response, authentication) -> {
+			this.generateLoginLog(LoginLogType.LOGIN.name(), ReturnCode.SUCCESS, authentication);
 			response.setContentType("application/json;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			JSONObject object = new JSONObject();
@@ -182,6 +188,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private AuthenticationFailureHandler failureHandler() {
 		return (request, response, authentication) -> {
+			this.generateLoginLog(LoginLogType.LOGIN.name(), ReturnCode.FAILURE, request, authentication.getMessage());
 			response.setContentType("application/json;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			JSONObject object = new JSONObject();
@@ -193,4 +200,73 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		};
 	}
 
+	/**
+	 * 登出处理器.
+	 * @return
+	 */
+	private LogoutHandler logoutHandler() {
+		return (request, response, authentication) -> {
+			this.generateLoginLog(LoginLogType.LOGOUT.name(), ReturnCode.SUCCESS, authentication);
+			response.setContentType("application/json;charset=utf-8");
+			try (PrintWriter out = response.getWriter()) {
+				JSONObject object = new JSONObject();
+				object.put("code", ReturnCode.SUCCESS);
+				out.write(object.toString());
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		};
+	}
+
+	/**
+	 * 记录登录/登出成功日志.
+	 * @param loginType 登录日志类型.
+	 * @param result 结果.
+	 * @param authentication au.
+	 */
+	private void generateLoginLog(String loginType, int result, Authentication authentication) {
+		LoginLog log = new LoginLog();
+		Object username = authentication.getPrincipal();
+		User user = (User) authentication.getDetails();
+		WebAuthenticationDetails details = (WebAuthenticationDetails) user.getDetails();
+		String ip = details.getRemoteAddress();
+		log.setId(UUIDUtil.generateUUID(UUIDUtil.type.LOG));
+		log.setUserName(username.toString());
+		log.setIp(ip);
+		log.setLoginDate(new Date());
+		log.setLoginLogType(loginType);
+		log.setResult(result);
+		if (LoginLogType.LOGIN.name().equals(loginType)) {
+			log.setMessage("登录成功");
+		} else {
+			log.setMessage("登出成功");
+		}
+		this.loginLogService.generateLog(log);
+	}
+
+	/**
+	 * 登录失败处理器.
+	 * @param loginType
+	 * @param result
+	 * @param request
+	 * @param message
+	 */
+	private void generateLoginLog(String loginType, int result, HttpServletRequest request, String message) {
+		LoginLog log = new LoginLog();
+		String ip = "";
+		if (request.getHeader("x-forwarded-for") == null) {
+			ip = request.getRemoteAddr();
+		} else {
+			ip = request.getHeader("x-forwarded-for");
+		}
+		log.setId(UUIDUtil.generateUUID(UUIDUtil.type.LOG));
+		log.setUserName(request.getParameter("zhun"));
+		log.setIp(ip);
+		log.setLoginDate(new Date());
+		log.setLoginLogType(loginType);
+		log.setResult(result);
+		log.setMessage(message);
+		this.loginLogService.generateLog(log);
+	}
 }

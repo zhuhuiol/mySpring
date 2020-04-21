@@ -1,6 +1,9 @@
 package com.homolo.homolo.service.impl;
 
+import com.homolo.homolo.annotations.SystemLog;
 import com.homolo.homolo.dao.UserServiceDao;
+import com.homolo.homolo.enums.LogType;
+import com.homolo.homolo.enums.OperationLogType;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +40,7 @@ public class UserDateilServiceImpl implements UserDetailsService {
 		return userInfo;
 	}
 
-
+	@SystemLog(operationType = OperationLogType.I, operationName = "增加测试数据", type = LogType.OPERATION)
 	public void testI(int num) {
 		StopWatch stopWatch = StopWatch.createStarted();
 		if (num < 1) {

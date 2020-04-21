@@ -51,6 +51,7 @@ public class CustomProvider implements AuthenticationProvider {
 			//保存用户信息时，去掉密码和里面的user登录认证信息
 			user.setUser(null);
 			user.setPassword(null);
+			user.setDetails(authentication.getDetails());
 			result.setDetails(user);
 			return result;
 		} catch (UsernameNotFoundException var4) {
