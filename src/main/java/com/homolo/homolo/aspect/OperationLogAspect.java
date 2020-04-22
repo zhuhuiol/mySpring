@@ -61,7 +61,21 @@ public class OperationLogAspect {
 
 	@AfterReturning("controllerAspect() && @annotation(systemLog)")
 	public void afterReturn(JoinPoint joinPoint, SystemLog systemLog) {
+		generateLog(joinPoint, null, systemLog);
+
+	}
+
+	@AfterThrowing(pointcut = "controllerAspect() && @annotation(systemLog)", throwing = "e")
+	public void doAfterThrowing(JoinPoint joinPoint, Exception e, SystemLog systemLog) {
+		generateLog(joinPoint, e, systemLog);
+	}
+
+
+	private void generateLog(JoinPoint joinPoint, Exception e, SystemLog systemLog) {
 		String operationName = systemLog.operationName();
+		if (e != null) {
+			operationName += "-->出错了：" + e.getMessage();
+		}
 		OperationLogType operationLogType = systemLog.operationType();
 		Authentication authentication = UserSessionFactory.currentUser();
 		Object username = authentication.getPrincipal();
@@ -80,16 +94,11 @@ public class OperationLogAspect {
 			log.setUserName(username.toString());
 			//入库
 			this.operationLogService.generateLog(log);
-		} else if (LogType.OTHER.equals(systemLog.type())) {
-			//其他日志
-
 		}
-
-	}
-
-	@AfterThrowing(pointcut = "controllerAspect()", throwing = "e")
-	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-		LOGGER.info("异常通知-------:" + e.getMessage());
+//		else if (LogType.OTHER.equals(systemLog.type())) {
+//			//其他日志
+//
+//		}
 	}
 
 }

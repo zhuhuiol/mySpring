@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author: ZH
@@ -40,6 +43,8 @@ public class UserDateilServiceImpl implements UserDetailsService {
 		return userInfo;
 	}
 
+	//默认事务
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	@SystemLog(operationType = OperationLogType.I, operationName = "增加测试数据", type = LogType.OPERATION)
 	public void testI(int num) {
 		StopWatch stopWatch = StopWatch.createStarted();

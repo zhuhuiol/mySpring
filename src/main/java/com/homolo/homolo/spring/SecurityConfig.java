@@ -92,7 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin()
 				.loginPage("/login").permitAll()
 				.loginProcessingUrl("/login")
-				.defaultSuccessUrl("/hello");
+				.defaultSuccessUrl("/hello")
+		.and().sessionManagement().maximumSessions(1); //最大并发数为1
 
 		http.logout()
 				//请求方式指定为get
