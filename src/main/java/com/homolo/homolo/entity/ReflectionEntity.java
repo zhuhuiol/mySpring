@@ -40,4 +40,5 @@ public class ReflectionEntity {
         this.name = name;
         System.out.println("私有构造方法----");
     }
+
 }
