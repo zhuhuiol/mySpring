@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 主题交换机-生产者.
  * @Date: 20-3-12 下午4:04
  */
-@Configuration
+//@Configuration
 public class TopicRabbitConfig {
 
 	public static final String key1 = "topic.zhu";

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 直连型交换机-生产者.
  * @Date: 20-3-12 下午2:37
  */
-@Configuration
+//@Configuration
 public class DirectRabbitConfig {
 
 	/**

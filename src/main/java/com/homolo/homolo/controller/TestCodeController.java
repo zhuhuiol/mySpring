@@ -2,6 +2,7 @@ package com.homolo.homolo.controller;
 
 import com.homolo.homolo.entity.User;
 import com.homolo.homolo.service.impl.UserDateilServiceImpl;
+import com.homolo.homolo.spring.ExecutorConfig;
 import com.homolo.homolo.utils.AsyncUtil;
 import com.homolo.homolo.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @Author: ZH
@@ -44,6 +47,7 @@ public class TestCodeController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+
 	/**
 	 * 测试异步方法.
 	 * @return .
@@ -51,9 +55,18 @@ public class TestCodeController {
 	@GetMapping(value = "/testAsync")
 	public Object testAsync() {
 		StopWatch stopWatch = StopWatch.createStarted();
+		ExecutorService executorService = ExecutorConfig.getExecutorService();
 		for (int i= 0; i < 50; i++) {
 			this.asyncUtil.testAsyncMethod(i);
 		}
+		//----等待子线程执行完毕 start  -- ---
+		executorService.shutdown();
+		while (true) {
+			if (executorService.isTerminated()) {
+				break;
+			}
+		}
+		//----等待子线程执行完毕 end -------
 		stopWatch.stop();
 		logger.info("testAsync cost {} ms", stopWatch.getTime());
 		return "测试";

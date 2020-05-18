@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: mq消息监听配置.
  * @Date: 20-3-13 上午9:42
  */
-@Configuration
+//@Configuration
 public class RabbitMQMessageListenerConfig {
 
 

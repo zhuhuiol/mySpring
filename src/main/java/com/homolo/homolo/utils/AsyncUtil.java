@@ -19,7 +19,7 @@ public class AsyncUtil {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Async()
+	@Async("executorService")
 	public void testAsyncMethod(int i) {
 		try {
 			Thread.sleep(200);

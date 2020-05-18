@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * 绑定三个队列，扇形交换机无需配置routingKey,不起作用
  * @Date: 20-3-12 下午5:04
  */
-@Configuration
+//@Configuration
 public class FanoutRabbitConfig {
 
 	@Bean

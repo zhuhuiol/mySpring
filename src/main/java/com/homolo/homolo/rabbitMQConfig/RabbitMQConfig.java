@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 默认.
  * @Date: 20-3-12 下午5:33
  */
-@Configuration
+//@Configuration
 public class RabbitMQConfig {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
