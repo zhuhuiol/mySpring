@@ -1,5 +1,7 @@
 package com.homolo.homolo.test;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
 import com.homolo.homolo.entity.ReflectionEntity;
 import lombok.SneakyThrows;
 import org.junit.Test;
@@ -8,8 +10,7 @@ import org.springframework.cglib.proxy.Enhancer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.*;
-import java.util.Arrays;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -80,8 +81,24 @@ public class ReflectionTest {
 
     @Test
     public void test3() throws BrokenBarrierException, InterruptedException {
+        ArrayList arrayList = new ArrayList();
+        arrayList.ensureCapacity(10);
+        LinkedList linkedList = new LinkedList();
+        HashMap hashMap = new HashMap(10, 0.8F);
+        Hashtable hashtable = new Hashtable(10, 0.8F);
 
+    }
 
+    /**
+     * hutool 工具包的各种使用哦.
+     * ...
+     */
+    @Test
+    public void testHutool() {
+
+        String b[] = {"2", "3", "4", "5"};
+        Integer[] integers = Convert.toIntArray(b);
+        System.out.println(integers);
     }
 
 

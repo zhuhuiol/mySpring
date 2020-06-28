@@ -19,8 +19,8 @@ import java.util.List;
  * @Description: 默认.
  * @Date: 20-3-12 下午5:20
  */
-@Component
-@RabbitListener(queues = "fanout.A")
+//@Component
+//@RabbitListener(queues = "fanout.A")
 public class FanoutRabbitConsumerAService implements ChannelAwareMessageListener {
 
 	Logger logger = LoggerFactory.getLogger(getClass());

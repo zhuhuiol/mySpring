@@ -44,7 +44,7 @@ https://www.cnblogs.com/bchjazh/p/5997728.html  sql语句
 -------------------------------------其他---------------------------
 https://segmentfault.com/a/1190000011827338  将本地web服务映射到公网访问
 https://www.runoob.com/docker/docker-install-mysql.html　　 菜鸟教程　
-
+https://blog.csdn.net/qq_37932082/article/details/79455676   集合类
 
 
 -----------------------------------RabbitMQ-----------------------------------

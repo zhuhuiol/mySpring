@@ -13,8 +13,8 @@ import java.util.List;
  * @Description: 默认.
  * @Date: 20-3-12 下午5:20
  */
-@Component
-@RabbitListener(queues = "fanout.C")
+//@Component
+//@RabbitListener(queues = "fanout.C")
 public class FanoutRabbitConsumerCService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());

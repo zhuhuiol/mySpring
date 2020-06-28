@@ -13,8 +13,8 @@ import java.util.Map;
  * @Description: 默认.
  * @Date: 20-3-12 下午4:44
  */
-@Component
-@RabbitListener(queues = "topic.zhu")
+//@Component
+//@RabbitListener(queues = "topic.zhu")
 public class TopicRabbitConsumerZhuService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());

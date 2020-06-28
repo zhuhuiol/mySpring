@@ -17,8 +17,8 @@ import java.io.IOException;
  * @Description: 默认.
  * @Date: 20-3-12 下午3:46
  */
-@Component
-@RabbitListener(queues = "DirectQueue")
+//@Component
+//@RabbitListener(queues = "DirectQueue")
 public class DirectRabbitConsumerService implements ChannelAwareMessageListener {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
