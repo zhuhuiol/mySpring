@@ -53,7 +53,6 @@ public class ReflectionTest {
         System.out.println("test field static result:" + linF.get(o));
         //返回对象
         ReflectionEntity o1 = (ReflectionEntity) o;
-        System.out.println("entity getName:" + o1.getName());
 
     }
 
